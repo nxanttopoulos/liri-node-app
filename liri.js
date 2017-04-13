@@ -35,7 +35,7 @@ if (searchRequest === "") {
 
 // This is the code to get the twitter data.
 if (command === "my-tweets") {
-	var params = {screen_name: 'nodejs'};
+	var params = {screen_name: 'nodejs', count: 20};
 	twitterApi.get('statuses/user_timeline', params, function(error, tweets, response) {
   		if (!error) {
     		console.log(tweets);
@@ -69,36 +69,32 @@ if (command === "my-tweets") {
 	        console.log('Error occurred: ' + err);
 	        return;
 	    }
-	 	console.log(data);
+	 	var returnObject = data.tracks;
+	 	var returnArray = returnObject.items;
+	    // for (i=0; i < returnObject.length; i++){
+	    // 	console.log(returnObject[i].album);
+	    // }
+	 	console.log(returnArray);
+	 	// Artist(s)
+		// The song's name
+		// A preview link of the song from Spotify
+		// The album that the song is from
 	});
 } else if (command === "do-what-it-says") {
 // This is the code to read the text file and use the spotify code to make a request.
 	fs.readFile("random.txt", "utf8", function(error, data) {
-	  console.log(data);
-	  var dataArr = data.split(", ");
+	  var dataArr = data.split(",");
 	  var liriCommand = dataArr[0];
-	  console.log(dataArr[1]);
 	  var trackName = dataArr[1];
 		 spotify.search({ type: 'track', query: trackName }, function(err, data) {
 		    if ( err ) {
 		        console.log('Error occurred: ' + err);
 		        return;
 		    }
-		 	console.log(data);
+		    var returnObject = data.tracks;
+	 		console.log(returnObject);
 		});
 	});
 } else {
 	console.log("Sorry, I'm afraid I didn't understand that.");
 }
-// node liri.js my-tweets
-// This will show your last 20 tweets and when they were created at in your terminal/bash window.
-// node liri.js spotify-this-song '<song name here>'
-// This will show the following information about the song in your terminal/bash window:
-// Artist(s)
-// The song's name
-// A preview link of the song from Spotify
-// The album that the song is from
-// node liri.js movie-this '<movie name here>'
-// This will show the console log above.
-// do-what-it-says
-// This will use fs to read the txt file and do the spotify command above.
