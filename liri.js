@@ -33,10 +33,11 @@ if (searchRequest === "") {
 	searchRequest = "The Sign";
 }
 
+// This conditional takes checks the user-input against the different functions and calls them.
 // This is the code to get the twitter data.
 if (command === "my-tweets") {
-	var params = {screen_name: 'nodejs', count: 20};
-	twitterApi.get('statuses/user_timeline', params, function(error, tweets, response) {
+	var parameters = {screen_name: 'nodejs', count: 20};
+	twitterApi.get('statuses/user_timeline', parameters, function(error, tweets, response) {
   		if (!error) {
     		console.log(tweets);
   		}
@@ -45,10 +46,7 @@ if (command === "my-tweets") {
 // This is code to get the OMDB data and save the user's search.
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json";
 	request(queryUrl, function(error, response, body) {
-
 		  if (!error && response.statusCode === 200) {
-
-		    // console.log(JSON.parse(body));
 		    console.log("The Title of the movie is: " + JSON.parse(body).Title);
 		    console.log("The year the movie came out is: " + JSON.parse(body).Year);
 		    console.log("The IMDB Rating of the movie is: " + JSON.parse(body).imdbRating);
@@ -58,9 +56,7 @@ if (command === "my-tweets") {
 		    console.log("The actors in the movie are: " + JSON.parse(body).Actors);
 		    console.log("The Rotten Tomatoes Rating of the movie is: " + JSON.parse(body).Ratings[1].Value);
 		    console.log("The Rotten Tomatoes URL of the movie is: " + JSON.parse(body).Ratings[1].Source);
-		  
 		  }
-
 	});
 } else if (command === "spotify-this-song") {
 // This is code to get the Spotify Data. 
@@ -71,14 +67,12 @@ if (command === "my-tweets") {
 	    }
 	 	var returnObject = data.tracks;
 	 	var returnArray = returnObject.items;
-	    // for (i=0; i < returnObject.length; i++){
-	    // 	console.log(returnObject[i].album);
-	    // }
-	 	console.log(returnArray);
-	 	// Artist(s)
-		// The song's name
-		// A preview link of the song from Spotify
-		// The album that the song is from
+	    for (i=0; i < returnArray.length; i++){
+	    	console.log(returnArray[i].artists.name);
+	    	console.log(returnArray[i].name);
+	    	console.log(returnArray[i].external_urls);
+	     	console.log(returnArray[i].album.name);
+	    }
 	});
 } else if (command === "do-what-it-says") {
 // This is the code to read the text file and use the spotify code to make a request.
@@ -92,7 +86,13 @@ if (command === "my-tweets") {
 		        return;
 		    }
 		    var returnObject = data.tracks;
-	 		console.log(returnObject);
+		    var returnArray = returnObject.items;
+	 		for (i=0; i < returnArray.length; i++){
+	    		console.log(returnArray[i].artists.name);
+	    		console.log(returnArray[i].name);
+	    		console.log(returnArray[i].external_urls);
+	     		console.log(returnArray[i].album.name);
+	    	}
 		});
 	});
 } else {
