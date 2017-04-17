@@ -35,11 +35,20 @@ if (searchRequest === "") {
 
 // This conditional takes checks the user-input against the different functions and calls them.
 // This is the code to get the twitter data.
+var newTwit = new Twitter ({
+  consumer_key: 'PZoS8VutLm0k2mhv05nQTPibY',
+  consumer_secret: 'IavLhAnXL6q0GmmuaRhJXP7Y6L2KLmT2BQtNQDFgAIv5UiEzht',
+  access_token_key: '852227480773644289-aMn0gS2Qkdld4KrPm0fcPKWwkIZKbb7',
+  access_token_secret: 'Akh1Q0iDf02ozk6CnxGGgzbVMOgbe73J7EBr6d2idbjEc',
+});
 if (command === "my-tweets") {
-	var parameters = {screen_name: 'nodejs', count: 20};
-	twitterApi.get('statuses/user_timeline', parameters, function(error, tweets, response) {
+	var parameters = {screen_name: 'Fake_Twitt_Acnt', count: 20};
+	newTwit.get('statuses/user_timeline', parameters, function(error, tweets, response) {
   		if (!error) {
-    		console.log(tweets);
+  			var returnObject = JSON.parse(response.body);
+    		for (i=1; i < returnObject.length; i++) {
+    			console.log(returnObject[i].text);
+    		}
   		}
 	});
 } else if (command === "movie-this") {
@@ -68,10 +77,12 @@ if (command === "my-tweets") {
 	 	var returnObject = data.tracks;
 	 	var returnArray = returnObject.items;
 	    for (i=0; i < returnArray.length; i++){
-	    	console.log(returnArray[i].artists.name);
-	    	console.log(returnArray[i].name);
-	    	console.log(returnArray[i].external_urls);
-	     	console.log(returnArray[i].album.name);
+	    	console.log("Artist: " + returnArray[i].album.name);
+	    	console.log("Song Name:  " + returnArray[i].name);
+	    	console.log("Preview Link from Spotify:  " + JSON.stringify(returnArray[i].external_urls));
+	     	console.log("Album Name: " + returnArray[i].album.name);
+	     	console.log("------------------------------------------");
+	     	console.log("------------------------------------------");
 	    }
 	});
 } else if (command === "do-what-it-says") {
@@ -88,10 +99,12 @@ if (command === "my-tweets") {
 		    var returnObject = data.tracks;
 		    var returnArray = returnObject.items;
 	 		for (i=0; i < returnArray.length; i++){
-	    		console.log(returnArray[i].artists.name);
-	    		console.log(returnArray[i].name);
-	    		console.log(returnArray[i].external_urls);
-	     		console.log(returnArray[i].album.name);
+	    		console.log("Artist: " + returnArray[i].album.name);
+	    		console.log("Song Name:  " + returnArray[i].name);
+	    		console.log("Preview Link from Spotify:  " + returnArray[i].external_urls);
+	     		console.log("Album Name: " + returnArray[i].album.name);
+	     		console.log("------------------------------------------");
+	     		console.log("------------------------------------------");
 	    	}
 		});
 	});
