@@ -46,8 +46,8 @@ if (command === "my-tweets") {
 	newTwit.get('statuses/user_timeline', parameters, function(error, tweets, response) {
   		if (!error) {
   			var returnObject = JSON.parse(response.body);
-    		for (i=1; i < returnObject.length; i++) {
-    			console.log(returnObject[i].text);
+    		for (i=0; i < returnObject.length; i++) {
+    			console.log("Tweet #" + (20-[i]) + " " + returnObject[i].text);
     		}
   		}
 	});
