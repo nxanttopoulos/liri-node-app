@@ -4,10 +4,6 @@ var Twitter = require('twitter');
 var request = require("request");
 var spotify = require('spotify');
 var fs = require("fs");
-// var consumerKey = twitterApi.twitterKeys.consumer_key;
-// var consumerSecret = twitterApi.twitterKeys.consumer_secret;
-// var accessKey = twitterApi.twitterKeys.access_token_key;
-// var accessSecret = twitterApi.twitterKeys.access_token_secret;
 var command = process.argv[2];
 var userInput = process.argv;
 var searchRequest = "";
@@ -33,7 +29,6 @@ if (searchRequest === "") {
 	searchRequest = "The Sign";
 }
 
-// This conditional takes checks the user-input against the different functions and calls them.
 // This is the code to get the twitter data.
 var newTwit = new Twitter ({
   consumer_key: 'PZoS8VutLm0k2mhv05nQTPibY',
@@ -41,6 +36,8 @@ var newTwit = new Twitter ({
   access_token_key: '852227480773644289-aMn0gS2Qkdld4KrPm0fcPKWwkIZKbb7',
   access_token_secret: 'Akh1Q0iDf02ozk6CnxGGgzbVMOgbe73J7EBr6d2idbjEc',
 });
+
+// This conditional takes checks the user-input against the different functions and calls them.
 if (command === "my-tweets") {
 	var parameters = {screen_name: 'Fake_Twitt_Acnt', count: 20};
 	newTwit.get('statuses/user_timeline', parameters, function(error, tweets, response) {
@@ -109,5 +106,6 @@ if (command === "my-tweets") {
 		});
 	});
 } else {
+	// If user does not enter an appopriate command, return error.
 	console.log("Sorry, I'm afraid I didn't understand that.");
 }
